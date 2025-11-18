@@ -8,7 +8,7 @@ int main(void)
     int line_count;
 
     // Open file
-    fd = open("test1.txt", O_RDONLY);
+    fd = open("bible.txt", O_RDONLY);
     if (fd == -1)
     {
         printf("Error opening file\n");

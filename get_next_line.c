@@ -28,7 +28,13 @@ char *read_more(char *saved, int fd)
 			return (NULL);
 		}
 		if(bytes == 0)
+		{
+			if(saved[0] != '\0')
+				return (saved);
+			if(saved)
+				free(saved);
 			return (NULL);
+		}
 		buf[bytes] = '\0';
 		saved = ft_strjoin(saved, buf);
 	}
@@ -41,7 +47,6 @@ char *get_line(char *read_line)
 	int i;
 
 	i = 0;
-	
 	// Check if end of line is reached or no strings found
 	if (read_line == NULL)
 		return NULL;
