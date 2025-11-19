@@ -19,6 +19,9 @@ char *ft_strjoin(char const *s1, char const *s2)
     s2++;
   }
   result[s1_length] = '\0';
+
+  if(s1)
+	  free((void *)s1);
   return result;
 }
 
@@ -28,21 +31,22 @@ char *ft_strdup(const char *s)
 {
   int s_length;
   char *dup;
+  int i;
 
+  i = 0;
   if(!s)
     return NULL;
 
   s_length = strlen(s);
-
   dup = malloc(sizeof(*s) * (s_length + 1));
   if(!dup)
     return NULL;
   while(*s)
   {
-    *dup = *s;
-    dup++;
+    dup[i] = *s;
+    i++;
     s++;
   }
-  *dup = '\0';
-  return dup - s_length;
+  dup[i] = '\0';
+  return dup;
 }
