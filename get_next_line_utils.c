@@ -1,52 +1,89 @@
 #include "get_next_line.h"
 
-char *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strchr(const char *s, int c)
 {
-  int s1_length;
-  int s2_length;
-  char *result;
+	unsigned char	uc;
+	char			*str;
 
-  s1_length = strlen(s1);
-  s2_length = strlen(s2);
-  result = malloc(sizeof(*s1) * (s1_length + s2_length + 1));
-  if(!result)
-    return NULL;
-  memcpy(result, s1, s1_length);
-  while(*s2)
-  {
-    result[s1_length] = *s2;
-    s1_length++;
-    s2++;
-  }
-  result[s1_length] = '\0';
-
-  if(s1)
-	  free((void *)s1);
-  return result;
+	str = (char *)s;
+	uc = (unsigned char)c;
+	while (*str)
+	{
+		if (*str == uc % 256)
+			return (str);
+		str++;
+	}
+	if (*str == '\0' && uc == '\0')
+		return (str);
+	return (NULL);
 }
 
-#include <stdlib.h>
-
-char *ft_strdup(const char *s)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-  int s_length;
-  char *dup;
-  int i;
+	char		*destination;
+	const char	*source;
+	int			i;
 
-  i = 0;
-  if(!s)
-    return NULL;
+	i = 0;
+	if (dest == NULL && src == NULL)
+		return (NULL);
+	destination = (char *)dest;
+	source = (const char *)src;
+	if (n == 0)
+		return (dest);
+	while (n != 0)
+	{
+		destination[i] = *source;
+		i++;
+		source++;
+		n--;
+	}
+	return (dest);
+}
 
-  s_length = strlen(s);
-  dup = malloc(sizeof(*s) * (s_length + 1));
-  if(!dup)
-    return NULL;
-  while(*s)
-  {
-    dup[i] = *s;
-    i++;
-    s++;
-  }
-  dup[i] = '\0';
-  return dup;
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		s1_length;
+	int		s2_length;
+	char	*result;
+
+	s1_length = strlen(s1);
+	s2_length = strlen(s2);
+	result = malloc(sizeof(*s1) * (s1_length + s2_length + 1));
+	if (!result)
+		return (NULL);
+	ft_memcpy(result, s1, s1_length);
+	while (*s2)
+	{
+		result[s1_length] = *s2;
+		s1_length++;
+		s2++;
+	}
+	result[s1_length] = '\0';
+	if (s1)
+		free((void *)s1);
+	return (result);
+}
+
+char	*ft_strdup(const char *s)
+{
+	int		s_length;
+	char	*dup;
+	int		i;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	s_length = strlen(s);
+	dup = malloc(sizeof(*s) * (s_length + 1));
+	if (!dup)
+		return (NULL);
+	while (*s)
+	{
+		dup[i] = *s;
+		i++;
+		s++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }
