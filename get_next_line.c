@@ -1,4 +1,5 @@
 #include "get_next_line.h"
+//#include "wrap_malloc.h"
 
 char *read_more(char *saved, int fd)
 {
@@ -83,7 +84,7 @@ char *get_print_line(char *read_line)
 	return line;
 }
 
-char *update_buffer(char *to_update)
+char *update_buffer(char *to_update, char *line)
 {
     char *new_buffer;
     int i;
@@ -91,6 +92,13 @@ char *update_buffer(char *to_update)
 
     if (!to_update)
         return (NULL);
+
+    (void)line;
+   /* if(line == NULL)
+    {
+	    free(to_update);
+	    return (NULL);
+	}*/
     
     // Find the first newline in the line
     // if no newline is found, the EOF is reached
@@ -158,8 +166,11 @@ char *get_next_line(int fd)
 	if(!buffer[fd])
 		return NULL;
 	line = get_print_line(buffer[fd]);
-	
-	buffer[fd] = update_buffer(buffer[fd]);
-
+	if(line == NULL)
+	{
+		free(buffer[fd]);
+		buffer[fd] = NULL;
+	}
+	buffer[fd] = update_buffer(buffer[fd], line);
 	return line;
 }
