@@ -41,7 +41,7 @@ char *read_more(char *saved, int fd)
 	return (saved);
 }
 
-char *get_line(char *read_line)
+char *get_print_line(char *read_line)
 {
 	char *line;
 	int i;
@@ -155,7 +155,7 @@ char *get_next_line(int fd)
 
 	if(!buffer[fd])
 		return NULL;
-	line = get_line(buffer[fd]);
+	line = get_print_line(buffer[fd]);
 	
 	buffer[fd] = update_buffer(buffer[fd]);
 
