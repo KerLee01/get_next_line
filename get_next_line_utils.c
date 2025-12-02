@@ -10,7 +10,10 @@ char *ft_strjoin(char const *s1, char const *s2)
   s2_length = strlen(s2);
   result = malloc(sizeof(*s1) * (s1_length + s2_length + 1));
   if(!result)
+  {
+	  free((char*)s1);
     return NULL;
+  }
   memcpy(result, s1, s1_length);
   while(*s2)
   {

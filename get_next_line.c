@@ -37,6 +37,8 @@ char *read_more(char *saved, int fd)
 		}
 		buf[bytes] = '\0';
 		saved = ft_strjoin(saved, buf);
+		if (saved == NULL)
+			return NULL;
 	}
 	return (saved);
 }
