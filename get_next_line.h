@@ -12,11 +12,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 
 char *get_next_line(int fd);
-char *ft_strjoin(char const *s1, char const *s2);
+size_t ft_strlen(const char *s);
+void *ft_memcpy(void *dest, const void *src, size_t n);
+char *ft_strchr(const char *s, int c);
+char *ft_strjoin(char const *s1, char const *s2, int s1_length, int s2_length);
 char *ft_strdup(const char *s);
 
 #endif
