@@ -1,95 +1,56 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kerlee <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/20 16:25:23 by kerlee            #+#    #+#             */
-/*   Updated: 2025/11/20 17:13:04 by kerlee           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 #include "get_next_line.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void add_node(t_list *current, t_list* new)
 {
-	char		*destination;
-	const char	*source;
-	int			i;
-
-	i = 0;
-	if (dest == NULL && src == NULL)
-		return (NULL);
-	destination = (char *)dest;
-	source = (const char *)src;
-	if (n == 0)
-		return (dest);
-	while (n != 0)
-	{
-		destination[i] = *source;
-		i++;
-		source++;
-		n--;
-	}
-	return (dest);
+	current->next = new;
 }
 
-int	ft_strlen(const char *str)
+int count_join_length(t_list *node)
 {
-	int	length;
+	int j;
+	int length;
+	char *current_str;
 
 	length = 0;
-	while (*str)
+	while(node->next != NULL)
+ 	{
+		if((node->content)[0] != '\0')
+			length += BUFFER_SIZE;
+		node = node->next;
+	}
+	j = 0;
+	current_str = node->content;
+	while(current_str[j] != '\0' && current_str[j] != '\n')
 	{
 		length++;
-		str++;
+		j++;
 	}
-	return (length);
+	if(current_str[j] == '\n')
+		length++;
+	return length;
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+t_list *create_new_node(char *content)
 {
-	int		s1_length;
-	int		s2_length;
-	char	*result;
+	t_list *new = malloc(sizeof(*new));
 
-	s1_length = ft_strlen(s1);
-	s2_length = ft_strlen(s2);
-	result = malloc(sizeof(*s1) * (s1_length + s2_length + 1));
-	if (!result)
-		return (NULL);
-	ft_memcpy(result, s1, s1_length);
-	while (*s2)
-	{
-		result[s1_length] = *s2;
-		s1_length++;
-		s2++;
-	}
-	result[s1_length] = '\0';
-	if (s1)
-		free((void *)s1);
-	return (result);
+	new->content = content;
+	new->next = NULL;
+
+	return new;
 }
 
-char	*ft_strdup(const char *s)
+void free_nodes(t_list *current)
 {
-	int		s_length;
-	char	*dup;
-	int		i;
+	t_list *buffer;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	s_length = ft_strlen(s);
-	dup = malloc(sizeof(*s) * (s_length + 1));
-	if (!dup)
-		return (NULL);
-	while (*s)
+	while(current->next != NULL)
 	{
-		dup[i] = *s;
-		i++;
-		s++;
+		free(current->content);
+		buffer = current;
+		current = current->next;
+		free(buffer);
 	}
-	dup[i] = '\0';
-	return (dup);
+	free(current->content);
+	free(current);
 }
