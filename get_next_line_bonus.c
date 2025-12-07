@@ -62,18 +62,19 @@ char *get_print_line(char *read_line)
 	if(!line)
 		return NULL;
 
-	i = 0;
-	while(read_line[i] && read_line[i] != '\n')
-	{
-		line[i] = read_line[i];
-		i++;
-	}
-
-	if(read_line[i] == '\n')
-	{
-		line[i] = '\n';
-		i++;
-	}
+	ft_memcpy(line, read_line, i-1);
+	// i = 0;
+	// while(read_line[i] && read_line[i] != '\n')
+	// {
+	// 	line[i] = read_line[i];
+	// 	i++;
+	// }
+	//
+	// if(read_line[i] == '\n')
+	// {
+	// 	line[i] = '\n';
+	// 	i++;
+	// }
 
 	line[i] = '\0';
 
